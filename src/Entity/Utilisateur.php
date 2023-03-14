@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -17,11 +19,14 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180, unique: true)]
-    private ?string $email = null;
-
     #[ORM\Column]
     private array $roles = [];
+
+    #[ORM\Column(length: 255)]
+    private ?string $nomPrenom = null;
+
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $email = null;
 
     /**
      * @var string The hashed password
@@ -30,7 +35,37 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
+    private bool $isVerified = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $avatar = null;
+
+    #[ORM\Column]
+    private ?float $credit = null;
+
+    #[ORM\OneToMany(mappedBy: 'auteur', targetEntity: Commentaire::class)]
+    private Collection $commentaires;
+
+    #[ORM\ManyToMany(targetEntity: Retrait::class, inversedBy: 'utilisateurs')]
+    private Collection $lieuxRetrait;
+
+    #[ORM\OneToMany(mappedBy: 'vendeur', targetEntity: Article::class)]
+    private Collection $articlesVendus;
+
+    #[ORM\ManyToMany(targetEntity: Article::class, inversedBy: 'acheteurs')]
+    private Collection $articlesAchetes;
+
+//    #[ORM\ManyToMany(targetEntity: Article::class, inversedBy: 'listeEnvieUtilisateurs')]
+//    private Collection $listeEnvie;
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+        $this->lieuxRetrait = new ArrayCollection();
+        $this->articlesVendus = new ArrayCollection();
+        $this->articlesAchetes = new ArrayCollection();
+//        $this->listeEnvie = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -113,4 +148,172 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getNomPrenom(): ?string
+    {
+        return $this->nomPrenom;
+    }
+
+    public function setNomPrenom(string $nomPrenom): self
+    {
+        $this->nomPrenom = $nomPrenom;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getCredit(): ?float
+    {
+        return $this->credit;
+    }
+
+    public function setCredit(float $credit): self
+    {
+        $this->credit = $credit;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires->add($commentaire);
+            $commentaire->setAuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getAuteur() === $this) {
+                $commentaire->setAuteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Retrait>
+     */
+    public function getLieuxRetrait(): Collection
+    {
+        return $this->lieuxRetrait;
+    }
+
+    public function addLieuxRetrait(Retrait $lieuxRetrait): self
+    {
+        if (!$this->lieuxRetrait->contains($lieuxRetrait)) {
+            $this->lieuxRetrait->add($lieuxRetrait);
+        }
+
+        return $this;
+    }
+
+    public function removeLieuxRetrait(Retrait $lieuxRetrait): self
+    {
+        $this->lieuxRetrait->removeElement($lieuxRetrait);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Article>
+     */
+    public function getArticlesVendus(): Collection
+    {
+        return $this->articlesVendus;
+    }
+
+    public function addArticlesVendu(Article $articlesVendu): self
+    {
+        if (!$this->articlesVendus->contains($articlesVendu)) {
+            $this->articlesVendus->add($articlesVendu);
+            $articlesVendu->setVendeur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticlesVendu(Article $articlesVendu): self
+    {
+        if ($this->articlesVendus->removeElement($articlesVendu)) {
+            // set the owning side to null (unless already changed)
+            if ($articlesVendu->getVendeur() === $this) {
+                $articlesVendu->setVendeur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Article>
+     */
+    public function getArticlesAchetes(): Collection
+    {
+        return $this->articlesAchetes;
+    }
+
+    public function addArticlesAchete(Article $articlesAchete): self
+    {
+        if (!$this->articlesAchetes->contains($articlesAchete)) {
+            $this->articlesAchetes->add($articlesAchete);
+        }
+
+        return $this;
+    }
+
+    public function removeArticlesAchete(Article $articlesAchete): self
+    {
+        $this->articlesAchetes->removeElement($articlesAchete);
+
+        return $this;
+    }
+
+//    /**
+//     * @return Collection<int, Article>
+//     */
+//    public function getListeEnvie(): Collection
+//    {
+//        return $this->listeEnvie;
+//    }
+//
+//    public function addListeEnvie(Article $listeEnvie): self
+//    {
+//        if (!$this->listeEnvie->contains($listeEnvie)) {
+//            $this->listeEnvie->add($listeEnvie);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeListeEnvie(Article $listeEnvie): self
+//    {
+//        $this->listeEnvie->removeElement($listeEnvie);
+//
+//        return $this;
+//    }
 }
