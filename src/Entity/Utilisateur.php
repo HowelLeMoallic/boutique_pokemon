@@ -55,6 +55,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Article::class, inversedBy: 'acheteurs')]
     private Collection $articlesAchetes;
 
+    #[ORM\Column(length: 255)]
+    private ?string $identifiant = null;
+
 //    #[ORM\ManyToMany(targetEntity: Article::class, inversedBy: 'listeEnvieUtilisateurs')]
 //    private Collection $listeEnvie;
 
@@ -316,4 +319,16 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 //
 //        return $this;
 //    }
+
+public function getIdentifiant(): ?string
+{
+    return $this->identifiant;
+}
+
+public function setIdentifiant(string $identifiant): self
+{
+    $this->identifiant = $identifiant;
+
+    return $this;
+}
 }
