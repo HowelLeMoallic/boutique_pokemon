@@ -1,28 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AccueilController!{% endblock %}
+{% block title %}Boutique Pokemon - Accueil{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styleAccueil.css') }}">
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1> Boutique Pokemon</h1>
 
     {% if is_granted('ROLE_USER') %}
-        <a href=" {{ path('app_logout') }} ">Se déconnecter</a>
-    {% else %}
-        <a href=" {{ path('app_register') }} ">S'inscrire</a>
-        <a href=" {{ path('app_login') }} ">Se connecter</a>
+        <a href="#">Mon profil</a>
+        <a href="#">Mon panier</a>
+        <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        {% else %}
+            <a href="{{ path('app_register') }}">S'enregistrer</a>
+            <a href="{{ path('app_login') }}">S'identifier</a>
     {% endif %}
     <br>
-    <br>
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Howel/Documents/Projets/Projets-Symfony/boutique_pokemon/src/Controller/AccueilController.php'|file_link(0) }}">src/Controller/AccueilController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Howel/Documents/Projets/Projets-Symfony/boutique_pokemon/templates/accueil/index.html.twig'|file_link(0) }}">templates/accueil/index.html.twig</a></code></li>
-    </ul>
-</div>
+    {% for categorie in categories %}
+        <a href="#">{{ categorie.libelleCategorie }}</a>
+    {% endfor %}
+    <div class="articles">
+
+        {% for article in articles %}
+            <div class="card" style="width: 18rem;">
+                <img src="{{ article.imageArticle }}" class="card-img-top" alt="{{ article.libelleArticle }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.libelleArticle }}</h5>
+                    <p class="card-text">{{ article.description }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ article.prix }} poképièces</li>
+                    <li class="list-group-item">
+                        {% if article.qteProduit != 0 %}
+                            <label>
+                                Quantité de produit
+                                <select>
+                                    {% for i in 1..article.qteProduit %}
+                                        <option value="{{ i }}">{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                        {% endif %}
+                    </li>
+                    <li class="list-group-item">Nombre de commentaires : 0</li>
+                </ul>
+                <div class="card-body">
+                    <a href="#" class="card-link">Acheter</a>
+                    <a href="#" class="card-link">En savoir plus</a>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
 {% endblock %}

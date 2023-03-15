@@ -1,0 +1,14 @@
+body{
+    text-align: center;
+}
+
+/*Disposition des articles*/
+.articles{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.card{
+    margin-bottom: 3rem;
+}
