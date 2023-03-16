@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Accueil{% endblock %}
+
+
+{% block body %}
+
+    <h1>Boutique Pokemon</h1>
+
+    <div class="article">
+        <h2>{{ article.libelleArticle }}</h2>
+        <img src="{{ article.imageArticle }}" alt="{{ article.libelleArticle }}">
+        <p>{{ article.description }}</p>
+        <p>{{ article.prix }}</p>
+        <p>{{ article.qteProduit }}</p>
+    </div>
+
+{% endblock %}
