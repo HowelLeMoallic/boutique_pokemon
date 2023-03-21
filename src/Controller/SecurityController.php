@@ -16,18 +16,14 @@ class SecurityController extends AbstractController
     public function login(Request $request, AuthenticationUtils $authenticationUtils, MailerInterface $mailer): Response
     {
 
+        //TODO: Mettre en place la vérification de captcha et du token csrf
+
         // Récupérer les erreurs de connexion (s'il y en a)
         $error = $authenticationUtils->getLastAuthenticationError();
 
         // Récupérer le dernier nom d'utilisateur saisi (s'il y en a)
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        // Afficher un message d'erreur (s'il y en a)
-        if ($request->query->get('error')) {
-            $errorMessage = 'Identifiants invalides';
-        } else {
-            $errorMessage = '';
-        }
 
         // Rendre le formulaire de connexion
         return $this->render('security/login.html.twig', [

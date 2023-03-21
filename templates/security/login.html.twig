@@ -2,6 +2,11 @@
 
 {% block title %}Log in!{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}
+
 {% block body %}
 <form method="post">
     {% if error %}
@@ -20,9 +25,7 @@
     <label for="inputPassword">Password</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
     <div class="checkbox mb-3">
         <label>
@@ -34,6 +37,8 @@
         <a href="{{ path('app_register') }}">Je n'ai pas de compte</a>
         <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
     </div>
+
+    <div class="g-recaptcha" data-sitekey="6LdlKBwlAAAAAEaPB8whPsMfx_u8Qa8RqOQeotil"></div>
 
     <button class="btn btn-lg btn-primary" type="submit">
         Sign in
