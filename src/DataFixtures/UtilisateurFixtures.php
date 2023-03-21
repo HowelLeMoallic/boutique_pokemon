@@ -100,7 +100,7 @@ class UtilisateurFixtures extends Fixture
 
         $user5->setIdentifiant('wewel');
 
-        $user5->setEmail('lemoallichowel@mail.com');
+        $user5->setEmail('lemoallichowel@gmail.com');
 
         $user5->setCredit(1000000);
 
