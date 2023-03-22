@@ -10,23 +10,51 @@
     <h1> Boutique Pokemon</h1>
 
     {% if app.user %}
-        <a href="#">Mon profil</a>
-        <img id="arrow" src="{{ asset('images/down-arrow.png') }}" alt="Image de flèche vers le bas" onclick="console.log('hello')">
-        <a href="#">Mon panier</a>
-        <a href="{{ path('app_logout') }}">Se déconnecter</a>
-        {% else %}
-            <a href="{{ path('app_register') }}">S'enregistrer</a>
-            <a href="{{ path('app_login') }}">S'identifier</a>
+
+        <header>
+
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Profil
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Mon profil</a>
+                    <a class="dropdown-item" href="#">Mes commandes</a>
+                    <a class="dropdown-item" href="#">Ma liste d'envie</a>
+                </div>
+            </div>
+
+            <div class="panier">
+                <a href="#">Mon panier</a>
+            </div>
+            <div class="deconnexion">
+                <a href="{{ path('app_logout') }}">Se déconnecter</a>
+            </div>
+
+        </header>
+
+    {% else %}
+        <header>
+            <div class="enregistrer">
+                <a href="{{ path('app_register') }}">S'enregistrer</a>
+            </div>
+            <div class="inscription">
+                <a href="{{ path('app_login') }}">S'identifier</a>
+            </div>
+        </header
     {% endif %}
-    <br>
-    {% for categorie in categories %}
-        <a href="#">{{ categorie.libelleCategorie }}</a>
-    {% endfor %}
+
+    <div class="categories">
+        {% for categorie in categories %}
+            <a href="#">{{ categorie.libelleCategorie }}</a>
+        {% endfor %}
+    </div>
+
     <div class="articles">
 
         {% for article in articles %}
 
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 28rem;">
                 <a href="{{ path('article_info', {'id': article.id}) }}">
                     <img src="{{ article.imageArticle }}" class="card-img-top" alt="{{ article.libelleArticle }}">
                 </a>

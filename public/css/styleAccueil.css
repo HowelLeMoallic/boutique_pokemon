@@ -2,6 +2,27 @@ body{
     text-align: center;
 }
 
+/*
+
+    Header
+
+ */
+
+header{
+    display: flex;
+    justify-content: center;
+}
+
+header div{
+    align-self: center;
+    padding-right: 2rem;
+}
+
+.open>.dropdown-menu {
+    display: flex;
+    flex-direction: column;
+}
+
 /*Disposition des articles*/
 .articles{
     display: flex;

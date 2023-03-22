@@ -1,0 +1,19 @@
+header {
+    display: flex;
+    justify-content: space-around;
+    grid-gap: 18rem;
+    padding-top: 2rem;
+}
+
+header .vide{
+    width: 13%;
+}
+
+header a img{
+    width: 177px;
+}
+header h1{
+    display: flex;
+    align-items: center;
+    font-size: 4em;
+}

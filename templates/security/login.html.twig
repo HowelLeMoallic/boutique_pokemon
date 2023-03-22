@@ -5,10 +5,11 @@
 {% block stylesheets %}
     {{ parent() }}
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="{{  asset('js/validation.js') }}"></script>
 {% endblock %}
 
 {% block body %}
-<form method="post">
+<form method="post" onclick="validation()">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -20,11 +21,20 @@
     {% endif %}
 
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
+    <div class="error">
+        <p id="text-error-mail"></p>
+    </div>
+    <label for="inputEmail">Email
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" autofocus>
+    </label>
+
+    <div class="error">
+        <p id="text-error-mdp"></p>
+    </div>
+    <label for="inputPassword">Password
+        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" >
+    </label>
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
     <div class="checkbox mb-3">
