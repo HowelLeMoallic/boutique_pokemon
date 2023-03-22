@@ -46,27 +46,27 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('nomPrenom', TextType::class, [
                 'label' => 'Nom Prénom',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter your first name and last name',
-                    ]),
-                    new Length([
-                        'min' => 2,
-                        'minMessage' => 'Your mail should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 255,
-                    ]),
-                ],
-                'required' => true,
+//                'constraints' => [
+//                    new NotBlank([
+//                        'message' => 'Entrer votre un nom et prénom valide',
+//                    ]),
+//                    new Length([
+//                        'min' => 2,
+//                        'minMessage' => 'Votre nom et prénom ne peuvent contenir pas plus de {{ limit }} caractères',
+//                        // max length allowed by Symfony for security reasons
+//                        'max' => 255,
+//                    ]),
+//                ],
+//                'required' => true,
             ])
             ->add('identifiant', TextType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter your identifiant',
+                        'message' => 'Entrer un identifiant valide',
                     ]),
                     new Length([
                         'min' => 2,
-                        'minMessage' => 'Your mail should be at least {{ limit }} characters',
+                        'minMessage' => 'Votre identifiant ne peut pas contenir plus de {{ limit }} caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 255,
                     ]),
@@ -76,11 +76,11 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter an email',
+                        'message' => 'Entrer un mail valide',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your mail should be at least {{ limit }} characters',
+                        'minMessage' => 'votre adresse mail ne peut contenir plus de {{ limit }} characters',
                         // max length allowed by Symfony for security reasons
                         'max' => 255,
                     ]),
@@ -91,10 +91,9 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Vous devez accepter les termes',
                     ]),
                 ],
-                'data' => true,
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -107,12 +106,12 @@ class RegistrationFormType extends AbstractType
                     'label' => 'Confirmation du mot de passe :',
                 ],
                 'mapped' => false,
-                'required' => false,
-//                'constraints' => [
-//                    new NotBlank([
-//                        'message' => 'Veuillez renseigner un mot de passe.',
-//                    ]),
-//                ]
+                'required' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner un mot de passe.',
+                    ]),
+                ]
             ])
         ;
     }
