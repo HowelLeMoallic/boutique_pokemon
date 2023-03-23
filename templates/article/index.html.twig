@@ -18,7 +18,7 @@
                     Profil
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Mon profil</a>
+                    <a class="dropdown-item" href="{{ path('app_mon_profil', {'id':utilisateur.id}) }}">Mon profil</a>
                     <a class="dropdown-item" href="#">Mes commandes</a>
                     <a class="dropdown-item" href="#">Ma liste d'envie</a>
                 </div>

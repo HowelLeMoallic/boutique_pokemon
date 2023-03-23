@@ -19,6 +19,8 @@ class ArticleController extends AbstractController
     #[Route('/article', name: 'app_accueil')]
     public function index(): Response
     {
+        $utilisateurEnCours = $this->getUser();
+
         $articles = $this->articleRepository->findAll();
 
         $categories = $this->categorieRepository->findAll();
@@ -26,6 +28,7 @@ class ArticleController extends AbstractController
         return $this->render('article/index.html.twig', [
             'articles' => $articles,
             'categories' => $categories,
+            'utilisateur' => $utilisateurEnCours,
         ]);
     }
 
