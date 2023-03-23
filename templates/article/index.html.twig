@@ -7,50 +7,60 @@
 {% endblock %}
 
 {% block body %}
-    <h1> Boutique Pokemon</h1>
 
-    {% if app.user %}
+    <header>
 
-        <header>
+        <img src="{{ asset('images/ico_pickachu.webp') }}" alt="Logo de Boutique Pokemon">
 
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Profil
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{{ path('app_mon_profil', {'id':utilisateur.id}) }}">Mon profil</a>
-                    <a class="dropdown-item" href="#">Mes commandes</a>
-                    <a class="dropdown-item" href="#">Ma liste d'envie</a>
-                </div>
+        <div class="content">
+            <div class="main_menu">
+                <h1> Boutique Pokemon</h1>
+                <nav class="menu">
+                    {% if app.user %}
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Profil
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{ path('app_mon_profil', {'id':utilisateur.id}) }}">Mon profil</a>
+                                <a class="dropdown-item" href="#">Mes commandes</a>
+                                <a class="dropdown-item" href="#">Ma liste d'envie</a>
+                            </div>
+                        </div>
+                        <div class="panier">
+                            <a href="#">Mon panier</a>
+                        </div>
+                        <div class="deconnexion">
+                            <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                        </div>
+                    {% else %}
+                        <div class="enregistrer">
+                            <a href="{{ path('app_register') }}">S'enregistrer</a>
+                        </div>
+                        <div class="inscription">
+                            <a href="{{ path('app_login') }}">S'identifier</a>
+                        </div>
+                    {% endif %}
+                </nav>
             </div>
 
-            <div class="panier">
-                <a href="#">Mon panier</a>
-            </div>
-            <div class="deconnexion">
-                <a href="{{ path('app_logout') }}">Se déconnecter</a>
+            <div class="form-floating mb-3">
+                <label for="search"></label>
+                <input class="form-control" type="text" id="search" name="search"
+                       placeholder="Que recherchez-vous ?" >
             </div>
 
-        </header>
+            <nav class="categories">
+                {% for categorie in categories %}
+                    <a href="#">{{ categorie.libelleCategorie }}</a>
+                {% endfor %}
+            </nav>
 
-    {% else %}
-        <header>
-            <div class="enregistrer">
-                <a href="{{ path('app_register') }}">S'enregistrer</a>
-            </div>
-            <div class="inscription">
-                <a href="{{ path('app_login') }}">S'identifier</a>
-            </div>
-        </header
-    {% endif %}
+        </div>
 
-    <div class="categories">
-        {% for categorie in categories %}
-            <a href="#">{{ categorie.libelleCategorie }}</a>
-        {% endfor %}
-    </div>
+    </header>
 
-    <div class="articles">
+    <article>
 
         {% for article in articles %}
 
@@ -86,5 +96,5 @@
 
         {% endfor %}
 
-    </div>
+    </article>
 {% endblock %}

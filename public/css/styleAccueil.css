@@ -1,30 +1,110 @@
-body{
-    text-align: center;
-}
-
 /*
 
     Header
 
  */
-
 header{
     display: flex;
-    justify-content: center;
+    grid-gap: 3rem;
+    margin: 5px 5px 80px 5px;
 }
 
-header div{
-    align-self: center;
-    padding-right: 2rem;
+/*
+
+    image du header
+
+ */
+header img{
+    width: 10%;
 }
 
+/*
+
+   Contenu écrit du header
+   Disposition des différentes div du contenu écrit du header
+
+ */
+header .content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+/*
+
+    div .main_menu
+    Disposition du titre h1 et du menu principal .menu
+
+ */
+
+.main_menu{
+    display: flex;
+    flex-direction: row;
+    grid-gap: 2rem;
+    justify-content: space-between;
+}
+/*
+
+    Titre h1
+
+ */
+h1{
+    width: 100%;
+    text-align: center;
+}
+
+/*
+
+    Menu principal
+    Disposition du menu principal
+
+
+ */
+nav.menu{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    grid-gap: 3rem;
+}
+
+/*
+
+    Champ saisi input header
+    Disposition du champ de saisi
+
+ */
+.content input{
+    width: 75%;
+    height: 4rem;
+    border-radius: 10px;
+}
+
+/*
+
+    div .categories
+    Disposition des filtres de catégories
+
+ */
+.content .categories{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 2em;
+}
+
+/*
+
+    Dropdown menu
+    Disposition des liens dans la liste
+
+ */
 .open>.dropdown-menu {
     display: flex;
     flex-direction: column;
 }
 
 /*Disposition des articles*/
-.articles{
+article{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
