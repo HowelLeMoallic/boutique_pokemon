@@ -13,7 +13,8 @@ form {
     height: 76vh;
     width: 45%;
     align-self: center;
-    background-color: #E6E6E3;
+    border: 1px solid grey;
+    box-shadow: -0.6em 0.5em 0.4em grey;
     border-radius: 10px;
 }
 
@@ -27,13 +28,15 @@ form div {
 }
 
 form div label {
-    width: 46%;
+    width: 20rem;
+    max-width: 46%;
     font-size: 1.3em;
 }
 
 form div input {
+    width: 20rem;
     border-radius: 3px;
-    width: 46%;
+    max-width: 46%;
 }
 
 form div ul {
@@ -45,6 +48,11 @@ form div ul {
     box-shadow: -0.3em 0.3em 0.4em grey;
 }
 
+form div label ~ input[type=text]:hover, input[type=email]:hover, input[type=password]:hover{
+    border: 2px solid #A1C9CC;
+    transform: scale(1.1);
+    transition-duration: 1s;
+}
 .btn-lg:hover{
     transform: scale(1.5);
     transition-duration: 1s;

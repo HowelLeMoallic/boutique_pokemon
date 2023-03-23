@@ -6,10 +6,21 @@
     {{ parent() }}
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="{{  asset('js/validation.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/styleRegistrationAndLogin.css') }}">
 {% endblock %}
 
 {% block body %}
-<form method="post" onclick="validation()">
+<header>
+    <a href="{{ path('app_accueil') }}">
+        <img src="{{ asset('images/ico_charmander.webp') }}" alt="Logo de Boutique Pokemon">
+    </a>
+    <h1>Sign in</h1>
+    <div class="vide">
+
+    </div>
+</header>
+{#    onclick="validation()"#}
+<form method="post" >
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -20,27 +31,31 @@
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
-    <div class="error">
-        <p id="text-error-mail"></p>
-    </div>
-    <label for="inputEmail">Email
+    <div>
+{#        <div class="error">#}
+{#            <p id="text-error-mail"></p>#}
+{#        </div>#}
+
+        <label for="inputEmail">Email</label>
         <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" autofocus>
-    </label>
-
-    <div class="error">
-        <p id="text-error-mdp"></p>
     </div>
-    <label for="inputPassword">Password
+
+
+    <div>
+{#        <div class="error">#}
+{#            <p id="text-error-mdp"></p>#}
+{#        </div>#}
+
+        <label for="inputPassword">Password</label>
         <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" >
-    </label>
+    </div>
+
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" name="_remember_me"> Remember me
-        </label>
+    <div>
+        <label for="remember_me" >Remember me</label>
+        <input type="checkbox" id="remember_me" name="_remember_me">
     </div>
 
     <div>
@@ -50,7 +65,7 @@
 
     <div class="g-recaptcha" data-sitekey="6LdlKBwlAAAAAEaPB8whPsMfx_u8Qa8RqOQeotil"></div>
 
-    <button class="btn btn-lg btn-primary" type="submit">
+    <button class="btn btn-lg" type="submit">
         Sign in
     </button>
 </form>
