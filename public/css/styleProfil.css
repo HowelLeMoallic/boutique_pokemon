@@ -1,0 +1,15 @@
+header{
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 5px 80px 5px;
+}
+header img{
+    width: 50%;
+}
+
+header .menu{
+    display: flex;
+    flex-direction: row;
+    grid-gap: 2rem;
+    justify-content: space-between;
+}

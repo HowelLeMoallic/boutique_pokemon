@@ -25,25 +25,49 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'Le nom et prénom ne peuvent pas être null')]
+    #[Assert\NotBlank(
+        message: 'Le nom et prénom ne peuvent pas être vides'
+    )]
+    #[Assert\Length(
+        min: 2,
+        max: 20,
+        minMessage: 'Votre nom et prénom ne peuvent pas être plus petits que {{ limit }} caractères',
+        maxMessage: 'Votre nom et prénom ne peuvent pas être plus grands que {{ limit }} caractères',
+    )]
     private ?string $nomPrenom = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Email(
+        message: 'L\'email saisi n\'est pas valide',
+    )]
+    #[Assert\NotBlank(
+        message: 'Le mail ne peut pas être vide'
+    )]
     private ?string $email = null;
 
     /**
-     * @var string The hashed password
+     * @var ?string The hashed password
      */
     #[ORM\Column]
+//    #[Assert\NotCompromisedPassword]
+    #[Assert\NotBlank(
+        message: 'Le mot de passe ne peut pas être vide'
+    )]
     private ?string $password = null;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\File(
+        maxSize: '1024k',
+        extensions: ['png', 'jpg', 'webp', 'svg'],
+        extensionsMessage: 'Veuillez choisir un fichier image au format jpg, png, wbp ou svg',
+    )]
     private ?string $avatar = null;
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero]
     private ?float $credit = null;
 
     #[ORM\OneToMany(mappedBy: 'auteur', targetEntity: Commentaire::class)]
@@ -59,6 +83,13 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $articlesAchetes;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 2,
+        max: 20,
+        minMessage: 'Votre identifiant ne peut pas être plus petit que {{ limit }} caractères',
+        maxMessage: 'Votre identifiant ne peut pas être plus grand que {{ limit }} caractères',
+    )]
     private ?string $identifiant = null;
 
 //    #[ORM\ManyToMany(targetEntity: Article::class, inversedBy: 'listeEnvieUtilisateurs')]
@@ -83,7 +114,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -127,7 +158,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 
@@ -160,7 +191,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->nomPrenom;
     }
 
-    public function setNomPrenom(string $nomPrenom): self
+    public function setNomPrenom(?string $nomPrenom): self
     {
         $this->nomPrenom = $nomPrenom;
 
