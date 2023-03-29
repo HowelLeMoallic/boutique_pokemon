@@ -8,12 +8,11 @@ use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 #[IsGranted('ROLE_USER')]
 class UtilisateurController extends AbstractController
@@ -25,7 +24,8 @@ class UtilisateurController extends AbstractController
 
     #[Route('/mon-profil', name: 'app_mon_profil')]
     public function monProfilUtilisateur(Request $request, EntityManagerInterface $manager,
-                                         UserPasswordHasherInterface $passwordHasher){
+                                         UserPasswordHasherInterface $passwordHasher, CsrfTokenManagerInterface $tokenManager){
+
 
         //Récupère l'utilisateur connecté ; Retourne objet de type UserInterface
         $profilUtilisateur = $this->getUser();
@@ -37,7 +37,8 @@ class UtilisateurController extends AbstractController
         //Permet de gérer la soumission du formulaire. On lui passe en paramètre la variable $request
         //qui contient les données soumises par le formulaire et on hydrate l'objet $profilUtilisateur, cad on va remplir
         // l'objet avec les données soumises par le formulaire.
-        $form->handleRequest($request);
+
+        //TODO : Validation des Tokens
 
         //Vérifie si l'utilisateur soumet le formulaire
         //Et si les données dont bien valides en respectant les contraintes de validations du formulaire et/ou

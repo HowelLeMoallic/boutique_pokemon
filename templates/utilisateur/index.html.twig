@@ -40,13 +40,15 @@
 
     {{ form_start(form) }}
 
-            {{ form_row(form.nomPrenom) }}
+        {{ form_row(form._token) }}
 
-            {{ form_row(form.identifiant) }}
+        {{ form_row(form.nomPrenom) }}
 
-            {{ form_row(form.email) }}
+        {{ form_row(form.identifiant) }}
 
-            {{ form_row(form.password) }}
+        {{ form_row(form.email) }}
+
+        {{ form_row(form.password) }}
 
         <div class="credit">
            <p>Crédit : {{ monProfil.credit }}</p>
