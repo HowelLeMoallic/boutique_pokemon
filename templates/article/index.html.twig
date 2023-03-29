@@ -22,7 +22,7 @@
                                 Profil
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="{{ path('app_mon_profil', {'id':utilisateur.id}) }}">Mon profil</a>
+                                <a class="dropdown-item" href="{{ path('app_mon_profil')}}">Mon profil</a>
                                 <a class="dropdown-item" href="#">Mes commandes</a>
                                 <a class="dropdown-item" href="#">Ma liste d'envie</a>
                             </div>
@@ -60,41 +60,53 @@
 
     </header>
 
+    {% for notice in app.flashes('success') %}
+        <p class="success">{{ notice }}</p>
+    {% endfor %}
+
+    <h2>Les derniers articles vendus</h2>
+
     <article>
 
-        {% for article in articles %}
+        {% if articles %}
+            {% for article in articles %}
 
-            <div class="card" style="width: 28rem;">
-                <a href="{{ path('article_info', {'id': article.id}) }}">
-                    <img src="{{ article.imageArticle }}" class="card-img-top" alt="{{ article.libelleArticle }}">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">{{ article.libelleArticle }}</h5>
-                    <p class="card-text">{{ article.description }}</p>
+                <div class="card" style="width: 28rem;">
+                    <a href="{{ path('article_info', {'id': article.id}) }}">
+                        <img src="{{ article.imageArticle }}" class="card-img-top" alt="{{ article.libelleArticle }}">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.libelleArticle }}</h5>
+                        <p class="card-text">{{ article.description }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{ article.prix }} poképièces</li>
+                        <li class="list-group-item">
+                            {% if article.qteProduit != 0 %}
+                                <label>
+                                    Quantité de produit
+                                    <select>
+                                        {% for i in 1..article.qteProduit %}
+                                            <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </label>
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">Nombre de commentaires : 0 </li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Acheter</a>
+                        <a href="#" class="card-link">En savoir plus</a>
+                    </div>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{{ article.prix }} poképièces</li>
-                    <li class="list-group-item">
-                        {% if article.qteProduit != 0 %}
-                            <label>
-                                Quantité de produit
-                                <select>
-                                    {% for i in 1..article.qteProduit %}
-                                        <option value="{{ i }}">{{ i }}</option>
-                                    {% endfor %}
-                                </select>
-                            </label>
-                        {% endif %}
-                    </li>
-                    <li class="list-group-item">Nombre de commentaires : 0</li>
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Acheter</a>
-                    <a href="#" class="card-link">En savoir plus</a>
-                </div>
-            </div>
 
-        {% endfor %}
+            {% endfor %}
+
+        {% else %}
+            <p>Aucun article en vente pour le moment</p>
+        {% endif %}
 
     </article>
+
 {% endblock %}
